@@ -552,10 +552,11 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    border:hsl(from s l)
+    border: none;
  }
     
-    /*  TABLE (Ch 11)  */.btn.trip-table {
+    /*  TABLE (Ch 11)  */
+.trip-table {
         width: 100%;
         border-collapse: collapse;
         background-color: var(--surface);
@@ -593,7 +594,6 @@ section {
 
     .trip-table .total-row td {
         background-color: var(--bright);
-        color: white;
         font-weight: bold;
     }
 
