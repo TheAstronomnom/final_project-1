@@ -1,0 +1,961 @@
+/*
+Author: Gabriel Marquez
+Date: April 12, 2026
+Description: Main stylesheet for Gabriel Marquez personal website
+final project. Uses techniques from Murach's HTML and CSS, 6th Edition
+(chapters 1-14, 16) including flexbox, grid, media queries, and
+mobile-first responsive design.
+*/
+
+/*  RESET (Ch 5)  */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*  CSS VARIABLES (Ch 4)  */
+:root {
+    --dark: #0A2540;
+    --medium: #0073E6;
+    --bright: #00A6FB;
+    --light: #D6ECFF;
+    --cream: #F0F8FF;
+    --text: #1A2B40;
+    --text-light: #5A6B80;
+    --border: #BDDEFF;
+    --surface: #FFFFFF;
+    --dark_menu: #0A2540;
+    --light_menu: #F0F8FF;
+}
+
+/*  DEFAULT STYLES / FLUID TYPOGRAPHY (Ch 6)  */
+body {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-size: calc(90% + 0.3vw);
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--cream);
+    width: min(95%, 1100px);
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    font-family: "DM Serif Display", Georgia, serif;
+    line-height: 1.2;
+    padding: 0.5em 0;
+}
+
+h1 { font-size: 225%; }
+h2 { font-size: 175%; }
+h3 { font-size: 125%; }
+
+p {
+    padding-bottom: 0.75em;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a:link, a:visited {
+    color: var(--medium);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover, a:focus {
+    color: var(--bright);
+    text-decoration: underline;
+}
+
+/*  HEADER (Ch 5, 7)  */
+header {
+    background-color: var(--dark_menu);
+    padding: 1em;
+
+    & .site-name {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 135%;
+        color: var(--light_menu);
+        text-align: center;
+    }
+
+    & .site-name a:link,
+    & .site-name a:visited {
+        color: var(--light_menu);
+        text-decoration: none;
+    }
+
+    & .site-name a:hover,
+    & .site-name a:focus {
+        color: var(--bright);
+        text-decoration: none;
+    }
+}
+
+/*  NAVIGATION MENU (Ch 7, 8) - MOBILE FIRST  */
+.navbar {
+    position: relative;
+    background-color: var(--dark_menu);
+
+    & ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    & a {
+        display: block;
+        padding: 0.5em 1em;
+        color: var(--light_menu);
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    & a:hover,
+    & a:focus {
+        background-color: var(--medium);
+        color: var(--light_menu);
+        text-decoration: none;
+    }
+
+    & a.current {
+        background-color: var(--bright);
+        color: var(--dark);
+    }
+}
+
+/* Menu starts hidden on mobile */
+.menu {
+    display: none;
+}
+
+/* Hamburger toggle button */
+#checkbox-toggle {
+    display: none;
+}
+
+.menu-btn {
+    display: block;
+    padding: 0.5em 1em;
+    color: var(--light_menu);
+    font-size: 150%;
+    cursor: pointer;
+}
+
+.menu-btn::after {
+    content: "\2630";
+}
+
+#checkbox-toggle:checked ~ .menu {
+    display: block;
+}
+
+/*  SUBMENU (Ch 7)  */
+.menu li:has(.submenu) {
+    position: relative;
+
+    & small {
+        margin-left: 0.25em;
+    }
+
+    & small::after {
+        content: "\25B6";
+        font-size: 60%;
+    }
+
+    &:hover > .submenu {
+        display: block;
+    }
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: var(--dark_menu);
+    width: 180px;
+    z-index: 200;
+}
+
+.submenu a {
+    padding: 0.5em 1em;
+    font-size: 90%;
+}
+
+/*  MAIN CONTENT (Ch 5)  */
+main {
+    background-color: var(--cream);
+    padding: 1em;
+    min-height: 60vh;
+}
+
+/*  HOME PAGE - HERO (Ch 6 - flexbox)  */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2em 0;
+    border-bottom: 2px solid var(--light);
+
+    & .tagline {
+        font-size: 105%;
+        color: var(--medium);
+        font-weight: bold;
+        text-transform: uppercase;
+        padding-bottom: 0.25em;
+    }
+
+    & .intro {
+        color: var(--text-light);
+        max-width: 600px;
+    }
+}
+
+.hero-photo {
+    width: clamp(150px, 40%, 220px);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--bright);
+    margin-bottom: 1em;
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/*  SECTION HEADER  */
+.section-header {
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--bright);
+
+    & h2 {
+        padding: 0;
+    }
+}
+
+section {
+    padding: 1.5em 0;
+}
+
+/*  HIGHLIGHT CARDS (Ch 14 - grid)  */
+.highlights {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+}
+
+.highlight-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25em;
+
+    & h3 {
+        color: var(--medium);
+        padding-top: 0;
+    }
+
+    & p {
+        color: var(--text-light);
+        font-size: 95%;
+        padding-bottom: 0;
+    }
+}
+
+/*  BUTTON (Ch 12)  */
+.btn {
+    display: inline-block;
+    padding: 0.6em 1.5em;
+    color: white;
+    background-color: var(--medium);
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: inherit;
+    text-decoration: none;
+}
+
+.btn:link,
+.btn:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: var(--bright);
+    color: white;
+    text-decoration: none;
+}
+
+/*  RESUME PAGE (Ch 5, 6)  */
+.job, .education-item {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--bright);
+    border-radius: 6px;
+    padding: 1.25em;
+    margin-bottom: 1.25em;
+
+    & .job-header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    & h3 {
+        padding: 0;
+    }
+
+    & .dates {
+        font-size: 90%;
+        color: var(--text-light);
+        font-weight: bold;
+        padding-top: 0.25em;
+    }
+
+    & .company {
+        font-size: 95%;
+        color: var(--medium);
+        font-weight: bold;
+        padding: 0.25em 0 0.5em 0;
+    }
+
+    & ul {
+        margin-left: 1.5em;
+        color: var(--text-light);
+    }
+
+    & li {
+        font-size: 95%;
+        padding-bottom: 0.5em;
+    }
+}
+
+/*  SKILLS - FLEXBOX (Ch 6)  */
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.skill-group {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25em;
+
+    & h3 {
+        color: var(--medium);
+        padding-top: 0;
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 0.75em;
+    }
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+}
+
+.skill-tag {
+    background-color: var(--light);
+    color: var(--medium);
+    font-size: 85%;
+    font-weight: bold;
+    padding: 0.3em 0.75em;
+    border-radius: 20px;
+}
+
+/*  CONTACT PAGE (Ch 6, 12)  */
+.contact-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 1em;
+}
+
+.info-item .icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background-color: var(--light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 125%;
+    color: var(--medium);
+}
+
+.info-item h3 {
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 80%;
+    text-transform: uppercase;
+    color: var(--text-light);
+    padding: 0 0 0.2em 0;
+}
+
+.info-item p {
+    padding: 0;
+    font-size: 95%;
+}
+
+/* Contact form (Ch 12) */
+.contact-form {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5em;
+
+    & h2 {
+        padding-top: 0;
+    }
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.25em;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    font-size: inherit;
+    padding: 0.5em;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background-color: var(--cream);
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 6em;
+    resize: vertical;
+}
+
+.form-group input:required:invalid {
+    border-color: #C0392B;
+}
+
+.form-group input:required:valid,
+.form-group input:valid {
+    border-color: var(--bright);
+}
+
+/*  JAPAN PAGE (Ch 14 - grid, Ch 13 - video)  */
+.page-intro {
+    color: var(--text-light);
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1em;
+}
+
+.trip-section {
+    padding: 1em 0;
+    margin-bottom: 1em;
+}
+
+.trip-section h3 {
+    color: var(--medium);
+    padding-top: 1em;
+}
+
+/* Photo grid - mobile first: 1 column */
+.photo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    padding-top: 1em;
+}
+
+.photo-grid figure {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.photo-grid figcaption {
+    padding: 0.75em;
+    font-size: 90%;
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    background-color: var(--light);
+}
+
+/* Itinerary list (Ch 9) */
+.itinerary-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4em;
+}
+
+.itinerary-list li {
+    padding: 0.5em 0.75em;
+    background-color: var(--light);
+    color: var(--medium);
+    border-radius: 5px;
+    border-left: 3px solid var(--bright);
+    font-size: 95%;
+}
+
+/* Video wrapper - responsive 16:9 (Ch 13) */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    margin: 1em 0;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border:hsl(from s l)
+ }
+    
+    /*  TABLE (Ch 11)  */.btn.trip-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .trip-table caption {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 120%;
+        color: var(--medium);
+        padding: 0.5em;
+        text-align: left;
+        caption-side: top;
+    }
+
+    .trip-table th {
+        background-color: var(--medium);
+        color: white;
+        text-align: left;
+        padding: 0.75em;
+        font-size: 95%;
+    }
+
+    .trip-table td {
+        padding: 0.75em;
+        border-bottom: 1px solid var(--border);
+        font-size: 90%;
+    }
+
+    .trip-table tbody tr:nth-child(even) td {
+        background-color: var(--light);
+    }
+
+    .trip-table .total-row td {
+        background-color: var(--bright);
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Responsive table - small screens (Ch 11) */
+    @media only screen and (max-width: 600px) {
+        .trip-table,
+        .trip-table thead,
+        .trip-table tbody,
+        .trip-table th,
+        .trip-table td,
+        .trip-table tr {
+            display: block;
+        }
+
+        .trip-table thead {
+            display: none;
+        }
+
+        .trip-table tr {
+            margin-bottom: 0.75em;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+
+        .trip-table td {
+            border: none;
+            padding: 0.4em 0.75em;
+        }
+
+        .trip-table td:first-child {
+            font-weight: bold;
+            color: var(--medium);
+            font-size: 105%;
+            padding-top: 0.75em;
+        }
+    }
+
+    /*  WEDDING PAGE  */
+    .wedding-hero {
+        text-align: center;
+        padding: 1em 0 1.5em 0;
+        border-bottom: 2px solid var(--light);
+        margin-bottom: 1.5em;
+    }
+
+    .wedding-hero .date {
+        color: var(--medium);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 105%;
+        letter-spacing: 0.05em;
+    }
+
+    .wedding-details-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        margin: 1em 0;
+    }
+
+    .wedding-details-table th,
+    .wedding-details-table td {
+        text-align: left;
+        padding: 0.75em 1em;
+        border-bottom: 1px solid var(--border);
+        font-size: 95%;
+    }
+
+    .wedding-details-table th {
+        background-color: var(--medium);
+        color: white;
+        width: 35%;
+    }
+
+    .wedding-details-table tr:last-child th,
+    .wedding-details-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /*  BREADCRUMB (Ch 16 - usability)  */
+    .breadcrumb {
+        font-size: 90%;
+        color: var(--text-light);
+        padding: 0.75em 0 0 0;
+    }
+
+    .breadcrumb a:link,
+    .breadcrumb a:visited {
+        color: var(--medium);
+    }
+
+    .breadcrumb a:hover,
+    .breadcrumb a:focus {
+        color: var(--bright);
+    }
+
+    /*  MILESTONE CARDS  */
+    .milestone-card {
+        text-align: center;
+
+        & img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 0.75em;
+        }
+
+        & a img:hover {
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+
+        & h3 {
+            padding-top: 0.5em;
+        }
+    }
+
+    /*  FOOTER  */
+    footer {
+        background-color: var(--dark_menu);
+        color: var(--light_menu);
+        text-align: center;
+        padding: 1.5em 1em;
+        margin-top: 2em;
+
+        & p {
+            font-size: 85%;
+            padding: 0;
+        }
+
+        & a:link,
+        & a:visited {
+            color: var(--light);
+        }
+
+        & a:hover,
+        & a:focus {
+            color: var(--bright);
+        }
+    }
+
+    /* MEDIA QUERIES (Ch 8) - MOBILE FIRST Expand layouts for larger viewports */
+
+    /* Tablet and up - 745px breakpoint */
+    @media only screen and (min-width: 745px) {
+
+        /* Header becomes horizontal with nav */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5em;
+
+            & .site-name {
+                text-align: left;
+            }
+        }
+
+        /* Navigation becomes horizontal, hide hamburger */
+        .menu {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .menu-btn {
+            display: none;
+        }
+
+        #checkbox-toggle:checked ~ .menu {
+            display: flex;
+        }
+
+        .navbar {
+            background-color: transparent;
+        }
+
+        .navbar a {
+            padding: 1em 0.75em;
+        }
+
+        /* Submenu changes direction for desktop */
+        .menu li:has(.submenu) small::after {
+            content: "\25BC";
+        }
+
+        .submenu {
+            top: 100%;
+            left: 0;
+            width: 180px;
+        }
+
+        /* Hero becomes two-column */
+        .hero {
+            flex-direction: row;
+            text-align: left;
+            gap: 2em;
+        }
+
+        .hero-text {
+            flex-basis: 65%;
+        }
+
+        .hero-photo {
+            flex-basis: 35%;
+            order: 1;
+        }
+
+        .hero-text .intro {
+            max-width: none;
+        }
+
+        /* Highlights become 3-column grid */
+        .highlights {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        /* Job header becomes row */
+        .job .job-header,
+        .education-item .job-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .job .dates,
+        .education-item .dates {
+            padding-top: 0;
+        }
+
+        /* Skills become 2-column */
+        .skills-grid {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .skill-group {
+            flex-basis: calc(50% - 0.5em);
+            flex-grow: 1;
+        }
+
+        /* Contact becomes two-column */
+        .contact-layout {
+            flex-direction: row;
+            gap: 2em;
+        }
+
+        .contact-info {
+            flex-basis: 40%;
+        }
+
+        .contact-form {
+            flex-basis: 60%;
+        }
+
+        /* Photo grid becomes 2-column */
+        .photo-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Itinerary list becomes 2-column */
+        .itinerary-list {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+/* Desktop - 992px breakpoint */
+@media only screen and (min-width: 992px) {
+
+/* Photo grid becomes 3-column */
+.photo-grid {
+grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Itinerary list becomes 3-column */
+.itinerary-list {
+grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Skills become 4-column */
+.skill-group {
+flex-basis: calc(25% - 0.75em);
+}
+}
+
+/* PHOTO MODAL (uses :target pseudo-class) */
+
+/* Photo grid links - make them feel clickable */
+.photo-grid figure a {
+display: block;
+cursor: pointer;
+}
+
+.photo-grid figure a:hover img,
+.photo-grid figure a:focus img {
+opacity: 0.85;
+transition: opacity 0.2s;
+}
+
+/* Modal overlay - hidden by default */
+.modal {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(10, 37, 64, 0.95);
+z-index: 1000;
+padding: 2em;
+}
+
+/* Modal becomes visible when its ID is targeted in the URL */
+.modal:target {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* Full-size image inside the modal */
+.modal img {
+max-width: 95%;
+max-height: 90vh;
+object-fit: contain;
+position: relative;
+z-index: 1001;
+}
+
+/* Background click area */
+.modal-bg {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1000;
+}
+
+/* Close button (X) in the top-right */
+.modal-close {
+position: absolute;
+top: 0.5em;
+right: 0.75em;
+color: white;
+font-size: 2.5em;
+font-weight: bold;
+text-decoration: none;
+z-index: 1002;
+line-height: 1;
+}
+
+.modal-close:link,
+.modal-close:visited {
+color: white;
+text-decoration: none;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+color: var(--bright);
+text-decoration: none;
+}
